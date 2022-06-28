@@ -1,0 +1,79 @@
+<%- include('../partials/header') %>
+<div>
+  <% if (tickets.length > 0) { %> 
+    <table>
+      <thead>
+        <tr>
+          <th>Seat #</th>
+          <th>Price ($)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% tickets.forEach(function(ticket) { %>
+          <tr>
+            <td><%= ticket.seat %></td>
+            <td>$<%= ticket.price %></td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+      <% } else { %>
+        <h5>No Tickets</h5>
+        <% } %>
+      </div>
+      <a href="/flights/<%= flight._id %>/tickets/new">Make New Ticket</a>
+<h1>Flight Info</h1>
+<container>
+  <div>Airport: </div>
+  <div><%= flight.airport %> </div>
+  <div>Airline: </div>
+  <div><%= flight.airline %> </div>
+  <div>Flight #: </div>
+  <div><%= flight.flightNo %> </div>
+  <div>Departure: </div>
+  <div><%= flight.departs %> </div>
+</container>
+    
+<container>
+    <h2>What's the Destination?</h2>
+    <form method="POST"
+    action="/flights/<%= flight._id %>/destinations">
+    <label>Airport:
+    <select name = "airport">
+      <option <%= selectedAirports.includes('MCI') ? 'disabled' : "" %> value="MCI">MCI</option>
+        <option <%= selectedAirports.includes('JFK') ? 'disabled' : "" %> value="JFK">JFK</option>
+        <option <%= selectedAirports.includes('LAX') ? 'disabled' : "" %> value="LAX">LAX</option>
+        <option <%= selectedAirports.includes('MDW') ? 'disabled' : "" %> value="MDW">MDW</option>
+        <option <%= selectedAirports.includes('BOS') ? 'disabled' : "" %> value="BOS">BOS</option>
+       </select> </label>
+
+    <label>Arrival:
+      <input name = "arrival" type="datetime-local" required/> 
+    </label>
+    <input type="submit" value="Add Destination">
+</form>
+</container>
+
+<div>
+<% if (flight.destinations.length > 0) { %> 
+    <table>
+        <thead>
+          <tr>
+            <th>Airport</th>
+            <th>Arrival</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% flight.destinations.forEach(function(destination) { %>
+            <tr>
+              <td><%= destination.airport %></td>
+              <td><%= destination.arrival %></td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    <% } else { %>
+      <h5>No Destinations</h5>
+    <% } %>
+</div>
+
